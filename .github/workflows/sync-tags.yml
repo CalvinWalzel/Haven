@@ -1,0 +1,21 @@
+name: Sync Tags from Upstream
+
+on:
+  workflow_dispatch:
+
+jobs:
+  sync-tags:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      
+      - name: Add upstream and fetch tags
+        run: |
+          git remote add upstream https://github.com/ancsemi/Haven.git
+          git fetch upstream --tags
+      
+      - name: Push tags to fork
+        run: git push origin --tags
