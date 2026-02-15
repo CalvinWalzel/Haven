@@ -28,7 +28,9 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v5
       with:
-        ref: ${{ github.event.inputs.tag || github.ref }}
+        ref: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.tag || github.ref }}
+        fetch-depth: 0
+        fetch-tags: true
 
     - name: Set up QEMU
       uses: docker/setup-qemu-action@v3
